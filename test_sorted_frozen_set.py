@@ -1,4 +1,5 @@
 import unittest
+from collections.abc import Set
 
 from sorted_frozen_set import SortedFrozenSet
 
@@ -272,7 +273,7 @@ class TestRelationalSetProtocol(unittest.TestCase):
     def test_le_negative(self):
         s = SortedFrozenSet({1, 2, 3})
         t = SortedFrozenSet({1, 2})
-        self.assertTrue(s <= t)
+        self.assertFalse(s <= t)
 
     def test_gt_positive(self):
         s = SortedFrozenSet({1, 2, 3})
@@ -303,6 +304,35 @@ class TestRelationalSetProtocol(unittest.TestCase):
         s = SortedFrozenSet({1, 2})
         t = SortedFrozenSet({1, 2, 3})
         self.assertFalse(s >= t)
+
+
+class TestSetOperationsMethods(unittest.TestCase):
+
+    def test_intersection(self):
+        s = SortedFrozenSet({1, 2, 3})
+        t = [2, 3, 4]
+        self.assertEqual(s.intersection(t), SortedFrozenSet({2, 3 }))
+
+    def test_union(self):
+        s = SortedFrozenSet({1, 2, 3})
+        t = [2, 3, 4]
+        self.assertEqual(s.intersection(t), SortedFrozenSet([2, 3]))
+
+    def test_symmetric_difference(self):
+        s = SortedFrozenSet({1, 2, 3})
+        t = [2, 3, 4]
+        self.assertEqual(s.symmetric_difference(t), SortedFrozenSet({1, 4}))
+
+    def test_difference(self):
+        s = SortedFrozenSet({1, 2, 3})
+        t = [2, 3, 4]
+        self.assertEqual(s.difference(t), SortedFrozenSet({1}))
+
+
+class TestSetProtocol(unittest.TestCase):
+
+    def test_protocol(self):
+        self.assertTrue(issubclass(SortedFrozenSet, Set))
 
 
 if __name__ == "__main__":
