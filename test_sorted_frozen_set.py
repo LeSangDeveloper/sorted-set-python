@@ -247,5 +247,63 @@ class TestHashableProtocol(unittest.TestCase):
         )
 
 
+class TestRelationalSetProtocol(unittest.TestCase):
+
+    def test_lt_positive(self):
+        s = SortedFrozenSet({1, 2})
+        t = SortedFrozenSet({1, 2, 3})
+        self.assertTrue(s < t)
+
+    def test_lt_negative(self):
+        s = SortedFrozenSet({1, 2, 3})
+        t = SortedFrozenSet({1, 2, 3})
+        self.assertFalse(s < t)
+
+    def test_le_lt_positive(self):
+        s = SortedFrozenSet({1, 2})
+        t = SortedFrozenSet({1, 2, 3})
+        self.assertTrue(s <= t)
+
+    def test_le_eq_positive(self):
+        s = SortedFrozenSet({1, 2, 3})
+        t = SortedFrozenSet({1, 2, 3})
+        self.assertTrue(s <= t)
+
+    def test_le_negative(self):
+        s = SortedFrozenSet({1, 2, 3})
+        t = SortedFrozenSet({1, 2})
+        self.assertTrue(s <= t)
+
+    def test_gt_positive(self):
+        s = SortedFrozenSet({1, 2, 3})
+        t = SortedFrozenSet({1, 2})
+        self.assertTrue(s > t)
+
+    def test_gt_positive(self):
+        s = SortedFrozenSet({1, 2, 3})
+        t = SortedFrozenSet({1, 2})
+        self.assertTrue(s > t)
+
+    def test_gt_negative(self):
+        s = SortedFrozenSet({1, 2})
+        t = SortedFrozenSet({1, 2, 3})
+        self.assertFalse(s > t)
+
+    def test_ge_gt_positive(self):
+        s = SortedFrozenSet({1, 2, 3})
+        t = SortedFrozenSet({1, 2})
+        self.assertTrue(s > t)
+
+    def test_ge_eq_positive(self):
+        s = SortedFrozenSet({1, 2, 3})
+        t = SortedFrozenSet({1, 2, 3})
+        self.assertTrue(s >= t)
+
+    def test_ge_negative(self):
+        s = SortedFrozenSet({1, 2})
+        t = SortedFrozenSet({1, 2, 3})
+        self.assertFalse(s >= t)
+
+
 if __name__ == "__main__":
     unittest.main()
